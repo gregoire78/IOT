@@ -1,0 +1,10 @@
+table Cpu
+id 
+marque 
+frequence
+
+table Taux de Charge
+id 
+date 
+id Cpu
+taux de charge
