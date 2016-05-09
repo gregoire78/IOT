@@ -66,12 +66,17 @@ var server = net.createServer(function(c) {
   c.on('end', function() {
     console.log('client disconnected');
   });
-  c.write('hello world\r\n');
+  c.write('Write Message Here\r\n');
+
+  c.on('data', function(d){
+      console.log(d+ '');
+  });
   c.pipe(c);
 });
 server.listen(8080, function() {
   console.log('server is listening');
 });
+
 
 module.exports = app;
 
