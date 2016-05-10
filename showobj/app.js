@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var net = require("net");
 var routes = require('./app/routes/index');
 
 
@@ -61,18 +60,49 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-var server = net.createServer(function(c) {
-  console.log('client connected');
-  c.on('end', function() {
-    console.log('client disconnected');
-  });
-  c.write('hello world\r\n');
-  c.pipe(c);
+
+var net = require('net');
+
+var HOST = 'localhost';
+var PORT = 8080;
+
+var client = new net.Socket();
+client.connect(PORT, HOST, function() {
+
+  console.log('connected to server!');
+  console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+
 });
-server.listen(8080, function() {
-  console.log('server is listening');
+client.on('data', function(data) {
+  console.log(data.toString());
+  client.end();
 });
+client.on('end', function() {
+  console.log('disconnected from server');
+});
+// Add a 'close' event handler for the client socket
+client.on('close', function() {
+  console.log('Connection closed');
+});
+
+//   console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+//   // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
+//   client.write('I am Chuck Norris!');
+//   client.write('YOUHHHHHHHHH HAHAHHAHAHAAHHA chuck chuck chuk');
+//
+// });
+//
+//
+//
+// // Add a 'data' event handler for the client socket
+// // data is what the server sent to this socket
+// client.on('data', function(data) {
+//
+//   console.log('DATA: ' + data);
+//   // Close the client socket completely
+//   client.destroy();
+//
+// });
+//
 
 module.exports = app;
-
-
