@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./app/routes/index');
-
+var http = require('http');
 
 var app = express();
 app.listen(app.get('port'), function() {
@@ -61,29 +61,70 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var net = require('net');
 
-var HOST = 'localhost';
-var PORT = 8080;
+//
+// server TCP
+//
 
-var client = new net.Socket();
-client.connect(PORT, HOST, function() {
+var net = require("net"),
+    PassThroughStream = require('stream').PassThrough,
+    stream = new PassThroughStream();
 
-  console.log('connected to server!');
-  console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
+var server = net.createServer(function(socket) {
+  console.log('server connected');
+
+  socket.on('data', function (data) {
+    console.log(JSON.parse(data.toString()));
+    
+    socket.write('merci. Est-ce bien ceci ? ' + data.toString() );
+  });
+  socket.write('Salut!');
+  socket.on('end', function() {
+    console.log('client disconnected');
+  });
+  // stream.on('data', function (d) {
+  //     d = getRandomArbitrary(0,100).toString();
+  //     socket.write(d);
+  // });
+  //socket.pipe(socket);
+  //
 });
-client.on('data', function(data) {
-  console.log(data.toString());
-  client.end();
+
+
+server.listen(8080, function() {
+  console.log('server is listening');
 });
-client.on('end', function() {
-  console.log('disconnected from server');
-});
-// Add a 'close' event handler for the client socket
-client.on('close', function() {
-  console.log('Connection closed');
-});
+
+
+
+
+// var net = require('net');
+//
+// var HOST = 'localhost';
+// var PORT = 8080;
+//
+// var client = new net.Socket();
+// client.connect(PORT, HOST, function() {
+//
+//   console.log('connected to server!');
+//   console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+//
+// });
+// client.on('data', function(data) {
+//   console.log(data.toString());
+//   client.end();
+// });
+// client.on('end', function() {
+//   console.log('disconnected from server');
+// });
+// // Add a 'close' event handler for the client socket
+// client.on('close', function() {
+//   console.log('Connection closed');
+// });
 
 //   console.log('CONNECTED TO: ' + HOST + ':' + PORT);
 //   // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
