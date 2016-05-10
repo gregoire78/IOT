@@ -19,11 +19,13 @@ $(function () {
 
                         // set up the updating of the chart each second
                         var series = this.series[0];
-                        setInterval(function () {
-                            var x = (new Date()).getTime(), // current time
-                                y = parseFloat(Math.random() * (100 - 0) + 0);
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
+                            var socket = io.connect('http://localhost:3000');
+                            socket.on('message', function (message) {
+                                var x = (new Date()).getTime(); // current time
+                                var y = parseFloat(message);
+                                console.log(message);
+                                series.addPoint([x, y], true, true);
+                            });
                     }
                 }
             },
