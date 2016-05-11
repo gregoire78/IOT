@@ -5,9 +5,32 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
+    script(src="/socket.io/socket.io.js")
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
     script(src="https://code.highcharts.com/highcharts.js")
     script(src="https://code.highcharts.com/highcharts-more.js")
     script(src="https://code.highcharts.com/modules/exporting.js")
+    script(src="https://www.gstatic.com/charts/loader.js")
+
     script(src="/javascripts/chart1.js")
     script(src="/javascripts/chart2.js")
+    script(src="/javascripts/chart.js")
+    //script(type='text/javascript').
+    //  var socket = io.connect('http://localhost:3000');
+    //
+    //  // On demande le pseudo au visiteur...
+    //  var pseudo = prompt('Quel est votre pseudo ?');
+    //  // Et on l'envoie avec le signal "petit_nouveau" (pour le différencier de "message")
+    //  socket.emit('petit_nouveau', pseudo);
+    //
+    //  // On affiche une boîte de dialogue quand le serveur nous envoie un "message"
+    //  socket.on('message', function (message) {
+    //    $("#cont").text('Le serveur a un message pour vous : ' + message);
+    //  });
+    //
+    //  // Lorsqu'on clique sur le bouton, on envoie un "message" au serveur
+    //  $('#poke').click(function () {
+    //    socket.emit('message', 'Salut serveur, ça va ?');
+    //  })
+
+

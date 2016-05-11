@@ -4,9 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var net = require("net");
 var routes = require('./app/routes/index');
-
+var http = require('http');
 
 var app = express();
 app.listen(app.get('port'), function() {
@@ -61,23 +60,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-var server = net.createServer(function(c) {
-  console.log('client connected');
-  c.on('end', function() {
-    console.log('client disconnected');
-  });
-  c.write('Write Message Here\r\n');
-
-  c.on('data', function(d){
-      console.log(d+ '');
-  });
-  c.pipe(c);
-});
-server.listen(8080, function() {
-  console.log('server is listening');
-});
-
 
 module.exports = app;
-
-
