@@ -1,0 +1,25 @@
+MAIN:
+	3 instances des 3 classes (cpu, mem, server)
+	test des methodes afin d'afficher les taux d'occupation du CPU et de la mémoire
+
+CPU:
+	.h:
+		déclaration de 2 méthodes ("cpuPcent" pour le taux d'occupation du CPU et
+		"liste" pour afficher la liste des proccessus actifs en détail) + constructeur
+	.CPP:
+		instanciation des 2 méthodes + constructeur
+
+MEMORY:
+	.h:
+		déclaration d'une méthode pour récupérer le taux d'occupation de la mémoire
+	.CPP:
+		instanciation de cette méthode
+
+
+SERVER:
+	.h:
+		déclaration d'une instance de "QTcpServer" afin de créer un serveur par la suite +
+		une méthode "newConnection" qui servira à créer la connexion Client/Server
+	.CPP:
+		instanciation de cette méthode ainsi qu'une modification du constructeur par
+		 défault
