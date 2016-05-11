@@ -11,10 +11,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     myserver.cpp \
     mymemory.cpp \
-    mycpu.cpp
+    mycpu.cpp \
+    flux.cpp
 
 HEADERS += \
     myserver.h \
     mymemory.h \
-    mycpu.h
+    mycpu.h \
+    flux.h
 
