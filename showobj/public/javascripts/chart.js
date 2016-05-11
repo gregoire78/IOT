@@ -1,9 +1,19 @@
 /**
  * Created by gregoire on 04/05/16.
  */
+var socket = io.connect('http://localhost:3000');
+
 $(function () {
     $(document).ready(function () {
 
+        socket.on('info', function (message) {
+            var str = message;
+            str = str.replace(/---.*$/,'');
+            console.log(str);
+            $("#cont").text(str)
+        });
+
+        // Highcharts
         Highcharts.setOptions({
             global: {
                 useUTC: false
@@ -16,16 +26,13 @@ $(function () {
                 marginRight: 10,
                 events: {
                     load: function () {
-
                         // set up the updating of the chart each second
                         var series = this.series[0];
-                            var socket = io.connect('http://localhost:3000');
-                            socket.on('message', function (message) {
-                                var x = (new Date()).getTime(); // current time
-                                var y = parseFloat(message);
-                                console.log(message);
-                                series.addPoint([x, y], true, true);
-                            });
+                        socket.on('cpu', function (message) {
+                            var x = (new Date()).getTime(); // current time
+                            var y = parseFloat(message);
+                            series.addPoint([x, y], true, true);
+                        });
                     }
                 }
             },
@@ -52,15 +59,16 @@ $(function () {
             },
             tooltip: {
                 formatter: function () {
+                    var d = new Date(this.x);
                     return '<b>' + this.series.name + '</b><br/>' +
-                        Highcharts.dateFormat('%Y-%m-%d à %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d à %H:%M:%S:', this.x) + d.getMilliseconds() + '<br/>' +
                         Highcharts.numberFormat(this.y, 2) + "%";
                 }
             },
             plotOptions: {
                 line: {
                     marker: {
-                        enabled: false
+                        enabled: true
                     }
                 }
             },
@@ -81,7 +89,7 @@ $(function () {
                     for (i = -19; i <= 0; i += 1) {
                         data.push({
                             x: time + i * 1000,
-                            y: Math.random() * (100 - 0) + 0
+                            y: 0
                         });
                     }
                     return data;
@@ -97,26 +105,31 @@ function drawChart() {
 
     var data = google.visualization.arrayToDataTable([
         ['Label', 'Value'],
-        ['Memory', 80],
-        ['CPU', 55],
+        ['CPU', 0],
+        ['Memory', 55],
         ['Network', 68]
     ]);
 
     var options = {
-        width: 400, height: 120,
+        width: 500, height: 220,
         redFrom: 90, redTo: 100,
         yellowFrom:75, yellowTo: 90,
-        minorTicks: 5
+        greenFrom:0, greenTo:75,
+        minorTicks: 25
     };
 
     var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
 
     chart.draw(data, options);
-
-    setInterval(function() {
-        data.setValue(0, 1, 75 + Math.round(25 * Math.random()));
-        chart.draw(data, options);
-    }, 1000);
+    socket.on('cpu', function (message) {
+        var y = parseFloat(message);
+        data.setValue(0, 1, Math.round(y));
+        chart.draw(data, options)
+    });
+    // setInterval(function() {
+    //     data.setValue(0, 1, 75 + Math.round(25 * Math.random()));
+    //     chart.draw(data, options);
+    // }, 1000);
     setInterval(function() {
         data.setValue(1, 1, Math.round(100 * Math.random()));
         chart.draw(data, options);
