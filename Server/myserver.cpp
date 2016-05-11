@@ -1,4 +1,12 @@
+#include <iostream>
+#include <string>
+#include <QString>
+#include <QLocale>
 #include "myserver.h"
+#include "mymemory.h"
+#include "mycpu.h"
+
+using namespace std;
 
 MyServer::MyServer(QObject *parent) : QObject(parent)
 {
@@ -16,11 +24,25 @@ MyServer::MyServer(QObject *parent) : QObject(parent)
 
 void MyServer::newConnection()
 {
+    MyMemory memory;
+    MyCPU myCpu;
+
+    QString message;
+    QString cpuMess;
+
+    double m = memory.getMemory();
+    double cpuMessage = myCpu.cpuPcent();
+
     QTcpSocket *socket = server->nextPendingConnection();
-    socket->write("Hello client mon gars suuuuuur! ;)\r\n");
+    message = QString::number(m, 'f', 6);
+    cpuMess = QString::number(cpuMessage, 'f', 6);
+
+    socket->write("Hello client, voici les données CPU et Mémoire du PC: \r\n");
+    socket->write("CPU: " + cpuMess.toLatin1() + "\r\n");
+    socket->write("Memoire: " + message.toLatin1() + "\r\n");
     socket->flush();
 
-    socket->waitForBytesWritten(3000);
+    socket->waitForBytesWritten(5000);
 
     socket->close();
 

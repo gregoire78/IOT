@@ -12,14 +12,14 @@ int main(int argc, char *argv[])
     MyCPU *myCpu;
 
     double v;
-    //double b;
+    double b;
 
     /*v = memory.getMemory();
     printf("La mémoire utilisée est de: %F\n\n", v);*/
 
-    /*b = myCpu->cpuPcent();
-    printf("Le Pcentage CPU instantanne est %g\n", b);*/
-    //myCpu->liste();
+   /* b = myCpu->cpuPcent();
+    printf("Le Pcentage CPU instantanne est %F\n", b);*/
+   // myCpu->liste();
     return a.exec();
 }
 

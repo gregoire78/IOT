@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <unistd.h>
 #include "mycpu.h"
 
 #define NomFic "/proc/stat"
@@ -24,7 +24,7 @@ double MyCPU::cpuPcent()
        fscanf(fp,"%s %ld %ld %ld %ld", nom, &v1, &v2, &v3, &v4);
        printf("%s %ld %ld %ld %ld\n",nom,v1,v2,v3,v4);
        /* on attend 1 sec */
-       //sleep(1);
+       sleep(1);
        rewind(fp);
        if ((fp = fopen(NomFic, "r")) == NULL) return (double)-1;
        fscanf(fp,"%s %ld %ld %ld %ld", nom, &vp1, &vp2, &vp3, &vp4);
