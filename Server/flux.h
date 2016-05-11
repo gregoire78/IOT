@@ -1,7 +1,6 @@
 #ifndef FLUX_H
 #define FLUX_H
 
-
 class flux
 {
 public:

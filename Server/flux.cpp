@@ -15,9 +15,6 @@ using namespace std;
          cout << eth0 <<endl;
          cout << lo << endl;
          cout << ppp0 <<endl;
-
-
-
          fichier.close();
      }
 
