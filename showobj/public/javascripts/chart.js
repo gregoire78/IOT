@@ -101,16 +101,41 @@ $(function () {
 
 google.charts.load('current', {'packages':['gauge']});
 google.charts.setOnLoadCallback(drawChart);
+
+// on recupere la mémoire totale
+var optionsMem;
+socket.on('memTot', function (message) {
+    var mem = parseInt(message);
+    console.log(mem);
+    var mem1 = mem-mem/4;
+    var mem2 = mem-mem1/10;
+
+    optionsMem = {
+        min:0, max: mem,
+        width: 500, height: 220,
+        redFrom: mem2, redTo: mem,
+        yellowFrom:mem1, yellowTo: mem2,
+        greenFrom:0, greenTo:mem1,
+        minorTicks: 25
+    };
+});
+
+
 function drawChart() {
 
     var data = google.visualization.arrayToDataTable([
         ['Label', 'Value'],
         ['CPU', 0],
-        ['Memory', 55],
         ['Network', 68]
     ]);
 
+    var dataMem = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['Mémoire', 0]
+    ]);
+
     var options = {
+        min:0, max:100,
         width: 500, height: 220,
         redFrom: 90, redTo: 100,
         yellowFrom:75, yellowTo: 90,
@@ -120,22 +145,29 @@ function drawChart() {
 
     var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
 
-    chart.draw(data, options);
+    //chart.draw(data, options);
     socket.on('cpu', function (message) {
         var y = parseFloat(message);
         data.setValue(0, 1, Math.round(y));
         chart.draw(data, options)
     });
-    // setInterval(function() {
-    //     data.setValue(0, 1, 75 + Math.round(25 * Math.random()));
-    //     chart.draw(data, options);
-    // }, 1000);
     setInterval(function() {
         data.setValue(1, 1, Math.round(100 * Math.random()));
         chart.draw(data, options);
     }, 1000);
-    setInterval(function() {
-        data.setValue(2, 1, Math.round(100 * Math.random()));
-        chart.draw(data, options);
-    }, 1000);
+    // setInterval(function() {
+    //     data.setValue(0, 1, 75 + Math.round(25 * Math.random()));
+    //     chart.draw(data, options);
+    // }, 1000);
+    // setInterval(function() {
+    //     data.setValue(1, 1, Math.round(100 * Math.random()));
+    //     chart.draw(data, options);
+    // }, 1000);
+
+    var chartMem = new google.visualization.Gauge(document.getElementById('chart_div_mem'));
+    socket.on('memUse', function (message) {
+        var y = parseInt(message);
+        dataMem.setValue(0, 1, y);
+        chartMem.draw(dataMem, optionsMem)
+    });
 }
