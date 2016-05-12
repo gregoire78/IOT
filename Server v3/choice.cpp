@@ -1,7 +1,6 @@
 #include "choice.h"
 #include "ui_choice.h"
 #include "myserver.h"
-#include "performances.h"
 
 Choice::Choice(QWidget *parent) :
     QMainWindow(parent),
@@ -17,12 +16,12 @@ Choice::~Choice()
 
 void Choice::on_recupCharge_clicked()
 {
-    performances *perf = new performances(this);
-    perf->show();
+    MyServer server;
     //Récupérer les données
 }
 
 void Choice::on_modifCharge_clicked()
 {
+    MyServer server;
     //Récupérer les données
 }
