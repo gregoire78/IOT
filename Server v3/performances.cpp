@@ -39,7 +39,7 @@ void performances::on_lcdNumberCpu_overflow()
 
 void performances::on_lcdNumber_Flux_overflow()
 {
-    flux myFlux;
+    /*flux myFlux;
     int f;
-    f = myFlux.fluxet();
+    f = myFlux.fluxet();*/
 }

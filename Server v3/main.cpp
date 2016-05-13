@@ -13,9 +13,16 @@ int main(int argc, char *argv[])
     //perf.show();
     Choice choice;
    //choice.show();
-    /*flux myFlux;
-    int f;
-    f = myFlux.fluxet();*/
+    /*
+    flux myFlux;
+          string e;
+          string s;
+          e = myFlux.fluxentrant();
+          cout<< "flux entrant :"<< e << endl;
+
+          s = myFlux.fluxsortant();
+          cout<< "flux sortant :"<< s << endl;
+          */
 
     return a.exec();
 }

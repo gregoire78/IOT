@@ -8,6 +8,7 @@
 using namespace std;
 
 class flux
+
 {
 public:
     flux();

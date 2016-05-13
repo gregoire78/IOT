@@ -9,8 +9,12 @@ int main(int argc, char *argv[])
     w.show();
 
     flux myFlux;
-    int f;
-    f = myFlux.fluxet();
+        string e;
+        string s;
+        e = myFlux.fluxentrant();
+        cout<< "flux entrant :"<< e << endl;
 
+        s = myFlux.fluxsortant();
+        cout<< "flux sortant :"<< s << endl;
     return a.exec();
 }

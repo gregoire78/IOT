@@ -53,7 +53,6 @@ using namespace std;
       else
           cerr << "Impossible d'ouvrir le fichier" << endl;
       return 0;
-
   }
 
 flux::flux()
