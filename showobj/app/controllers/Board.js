@@ -11,7 +11,7 @@ var Board = {
         Taux.find({}, function (err, cpu) {
             if (err) throw err;
             //console.log(cpu);
-            res.render('index', { cpu : cpu});
+            res.render('index', { cpu : cpu });
         });
         
     }

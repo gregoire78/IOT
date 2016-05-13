@@ -8,6 +8,7 @@ var schema = new Schema({
   // taux:{type:Number, min: 0, max: 1000000 }
   cpu:{type: String},
   info:{type: String},
+  time:{type: String},
   mem: {
     use:{type:String},
     tot:{type:String}
