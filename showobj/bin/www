@@ -94,11 +94,9 @@ var cpu = {cpu:null,info:null,mem:{use:null, tot:null}};
 var io = require('socket.io').listen(server);
 io.sockets.on('connection', function (socket, pseudo) {
   // Quand un client se connecte, on lui envoie un message
-  socket.emit('info', cpu.info);
-  socket.emit('memTot', cpu.mem.tot);
+  socket.emit('info', cpu);
   setInterval(function () {
-    socket.emit('cpu', cpu.cpu);
-    socket.emit('memUse', cpu.mem.use);
+    socket.emit('cpu', cpu);
   },1000);
   
   // // On signale aux autres clients qu'il y a un nouveau venu
