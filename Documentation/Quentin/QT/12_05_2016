@@ -1,0 +1,11 @@
+Lancement du serveur à partir d'une interface graphique
+	/*Mettre la photo (ServeurV2.png)*/
+
+
+Ajout de plusieurs fenêtres
+	->performances : fenêtre dans laquelle les taux (CPU/Memoire/Flux) devait apparaître dans un premier temps
+		/*Mettre la photo(perf.png)*/
+	->choix: fenêtre dans laquelle l'utilisateur choisit de récup ses Taux de charge ou bien de modifier les mesures
+		/*Mettre la photo(choix.png)*/
+
+

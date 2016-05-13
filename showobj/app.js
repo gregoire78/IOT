@@ -6,8 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./app/routes/index');
 var http = require('http');
+var mongoose = require('mongoose');
 
 var app = express();
+// connection bdd
+mongoose.connect('mongodb://localhost/cpu', function (err) {
+  if(err) throw err;
+});
 app.listen(app.get('port'), function() {
   console.log('Server started: http://localhost:' + app.get('port') + '/');
 });

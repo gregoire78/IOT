@@ -1,8 +1,17 @@
 extends layout
 
 block content
-  p Binevenue sur votre gestionnaire
-  div#cont
+  h1 Bienvenue sur votre gestionnaire
+
+  p#cont
+  //img(src="images/Intel_Core_i5_vPro_logo.png" width="50")
   div#container1(style="min-width: 310px; height: 400px; margin: 0 auto")
   //div#containerr(style="min-width: 310px; height: 400px; margin: 0 auto")
-  div#chart_div(style="width: 400px; height: 120px")
+  div#chart_div(style="width: 220px; height: 220px; float:left")
+  div#chart_div_mem(style="width: 220px; height: 220px; float:left")
+  div(style="clear:both")
+  ul
+    each mem in cpu
+      li=mem.mem
+      li=mem.cpu
+      li=mem.info
