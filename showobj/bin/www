@@ -89,6 +89,11 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
+/**
+ * web socket
+ * @type {{cpu: null, info: null, mem: {use: null, tot: null}}}
+ */
+
 var cpu = {cpu:null,info:null,mem:{use:null, tot:null}};
 
 var io = require('socket.io').listen(server);
@@ -114,9 +119,15 @@ io.sockets.on('connection', function (socket, pseudo) {
   // });
 });
 
-//
-// server TCP
-//
+/**
+* server TCP
+ * et mongoose
+*/
+
+require('../app/models/tauxDeCharge');
+var mongoose = require('mongoose'),
+    Taux = mongoose.model('TauxDeCharge');
+
 
 var net = require("net"),
     PassThroughStream = require('stream').PassThrough,
@@ -130,10 +141,14 @@ var servertcp = net.createServer(function(socket) {
   console.log('server connected');
   socket.on('data', function (data) {
     cpu = JSON.parse(data.toString());
+
     console.log(cpu);
     if(cpu.greeting != undefined)
       socket.write('Salut!');
     else
+      new Taux(cpu).save(function (err) {
+        if (!err) console.log('Taux sauvegardé')
+      });
       socket.write('Suivant');
   });
   socket.on('end', function() {
